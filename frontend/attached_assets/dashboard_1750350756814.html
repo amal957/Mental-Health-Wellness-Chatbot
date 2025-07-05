@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Mental Wellness Chatbot{% endblock %}
+
+{% block main_class %}py-4{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1>Welcome back, {{ current_user.full_name.split()[0] }}!</h1>
+                    <p class="text-muted mb-0">How are you feeling today?</p>
+                </div>
+                <div>
+                    <a href="{{ url_for('chat') }}" class="btn btn-primary">
+                        <i data-feather="message-circle" class="me-2"></i>Start Chatting
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Summary Stats -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title text-white-50">Total Entries</h6>
+                            <h3 class="mb-0">{{ summary_stats.total_entries }}</h3>
+                        </div>
+                        <i data-feather="edit-3" style="width: 32px; height: 32px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title text-white-50">Common Emotion</h6>
+                            <h3 class="mb-0">{{ summary_stats.most_common_emotion.title() }}</h3>
+                        </div>
+                        <i data-feather="heart" style="width: 32px; height: 32px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-info text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title text-white-50">Avg Sentiment</h6>
+                            <h3 class="mb-0">{{ "%.2f"|format(summary_stats.average_sentiment) }}</h3>
+                        </div>
+                        <i data-feather="trending-up" style="width: 32px; height: 32px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title text-dark-50">Days Tracked</h6>
+                            <h3 class="mb-0">{{ summary_stats.days_tracked }}</h3>
+                        </div>
+                        <i data-feather="calendar" style="width: 32px; height: 32px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row g-4">
+        <!-- Recent Conversations -->
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i data-feather="message-circle" class="me-2"></i>Recent Conversations
+                    </h5>
+                    <a href="{{ url_for('chat') }}" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    {% if recent_conversations %}
+                        {% for conv in recent_conversations %}
+                            {% if conv.is_user_message %}
+                                <div class="d-flex mb-3">
+                                    <div class="flex-shrink-0">
+                                        <div class="badge bg-primary rounded-pill">You</div>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <p class="mb-1">{{ conv.message[:100] }}{% if conv.message|length > 100 %}...{% endif %}</p>
+                                        <small class="text-muted">
+                                            {{ conv.timestamp.strftime('%b %d, %Y at %I:%M %p') }}
+                                            {% if conv.emotion %}
+                                                • <span class="emotion-badge emotion-{{ conv.emotion }}">{{ conv.emotion.title() }}</span>
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center text-muted py-4">
+                            <i data-feather="message-circle" style="width: 48px; height: 48px;" class="mb-3"></i>
+                            <p>No conversations yet. Start by chatting with your AI companion!</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Journal Entries -->
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i data-feather="book" class="me-2"></i>Recent Journal Entries
+                    </h5>
+                    <a href="{{ url_for('journal') }}" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    {% if recent_journals %}
+                        {% for journal in recent_journals %}
+                            <div class="mb-3 p-3 border rounded">
+                                <h6 class="mb-2">{{ journal.title }}</h6>
+                                <p class="mb-2">{{ journal.content[:150] }}{% if journal.content|length > 150 %}...{% endif %}</p>
+                                <small class="text-muted">
+                                    {{ journal.created_at.strftime('%b %d, %Y') }}
+                                    {% if journal.emotion %}
+                                        • <span class="emotion-badge emotion-{{ journal.emotion }}">{{ journal.emotion.title() }}</span>
+                                    {% endif %}
+                                </small>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center text-muted py-4">
+                            <i data-feather="book" style="width: 48px; height: 48px;" class="mb-3"></i>
+                            <p>No journal entries yet. Start documenting your thoughts and feelings!</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Actions -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">
+                        <i data-feather="zap" class="me-2"></i>Quick Actions
+                    </h5>
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <a href="{{ url_for('chat') }}" class="btn btn-outline-primary w-100">
+                                <i data-feather="message-circle" class="me-2"></i>Start Chat
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="{{ url_for('journal') }}" class="btn btn-outline-success w-100">
+                                <i data-feather="edit-3" class="me-2"></i>Write Journal
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="{{ url_for('analytics') }}" class="btn btn-outline-info w-100">
+                                <i data-feather="bar-chart-2" class="me-2"></i>View Analytics
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="{{ url_for('resources') }}" class="btn btn-outline-warning w-100">
+                                <i data-feather="bookmark" class="me-2"></i>Resources</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Mental Wellness Chatbot{% endblock %}
+
+{% block main_class %}py-5{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <div class="mb-5">
+                <i data-feather="heart" class="text-primary" style="width: 64px; height: 64px;"></i>
+                <h1 class="display-4 mt-3 mb-4">Mental Wellness Chatbot</h1>
+                <p class="lead text-muted">
+                    Your personal AI companion for emotional support and mental health tracking. 
+                    Get real-time emotion detection, personalized insights, and therapeutic resources.
+                </p>
+            </div>
+            
+            <div class="row g-4 mb-5">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i data-feather="message-circle" class="text-info mb-3" style="width: 48px; height: 48px;"></i>
+                            <h5 class="card-title">Smart Conversations</h5>
+                            <p class="card-text text-muted">
+                                Chat with an AI that understands your emotions and provides thoughtful, empathetic responses.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i data-feather="bar-chart-2" class="text-success mb-3" style="width: 48px; height: 48px;"></i>
+                            <h5 class="card-title">Advanced Analytics</h5>
+                            <p class="card-text text-muted">
+                                Track your emotional patterns with comprehensive visualizations and personalized insights.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i data-feather="shield" class="text-warning mb-3" style="width: 48px; height: 48px;"></i>
+                            <h5 class="card-title">Private & Secure</h5>
+                            <p class="card-text text-muted">
+                                Your mental health data is securely stored and never shared. Complete privacy guaranteed.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">
+                    <i data-feather="user-plus" class="me-2"></i>Get Started
+                </a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg">
+                    <i data-feather="log-in" class="me-2"></i>Sign In
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-5 pt-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">Features</h2>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <i data-feather="brain" class="text-primary"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5>Real-time Emotion Detection</h5>
+                            <p class="text-muted">Advanced ML models analyze your text to detect emotions with high accuracy.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <i data-feather="calendar" class="text-primary"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5>Mood Calendar</h5>
+                            <p class="text-muted">Visualize your emotional journey with interactive heatmaps and trend analysis.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <i data-feather="book-open" class="text-primary"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5>Digital Journaling</h5>
+                            <p class="text-muted">Express your thoughts and feelings with our integrated journaling system.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <i data-feather="compass" class="text-primary"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5>Personalized Resources</h5>
+                            <p class="text-muted">Get tailored recommendations for therapists, tools, and coping strategies.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

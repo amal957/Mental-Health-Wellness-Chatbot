@@ -1,0 +1,428 @@
+{% extends "base.html" %}
+
+{% block title %}Resources - Mental Wellness Chatbot{% endblock %}
+
+{% block main_class %}py-4{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1>Mental Health Resources</h1>
+                    <p class="text-muted mb-0">Curated resources to support your mental wellness journey</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Emergency Resources -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="alert alert-danger border-start border-5 border-danger">
+                <div class="d-flex">
+                    <i data-feather="alert-triangle" class="me-3 mt-1"></i>
+                    <div>
+                        <h5 class="alert-heading">Need Immediate Help?</h5>
+                        <p class="mb-2">If you're experiencing a mental health emergency or having thoughts of self-harm:</p>
+                        <ul class="mb-3">
+                            <li><strong>National Suicide Prevention Lifeline:</strong> 988 or 1-800-273-8255</li>
+                            <li><strong>Crisis Text Line:</strong> Text HOME to 741741</li>
+                            <li><strong>Emergency Services:</strong> 911</li>
+                        </ul>
+                        <p class="mb-0"><strong>You are not alone. Help is available 24/7.</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Personalized Recommendations -->
+    {% if emotion_frequency %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i data-feather="user" class="me-2"></i>Personalized Recommendations
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Based on your recent emotional patterns, here are some tailored resources:</p>
+                    
+                    {% set top_emotion = emotion_frequency.keys() | list | first if emotion_frequency else 'neutral' %}
+                    
+                    {% if top_emotion == 'sadness' %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="card border-info">
+                                    <div class="card-body">
+                                        <h6><i data-feather="heart" class="text-info me-2"></i>Depression Support</h6>
+                                        <p class="small text-muted">Resources specifically for managing sadness and depression</p>
+                                        <a href="https://www.nami.org/About-Mental-Illness/Mental-Health-Conditions/Depression" class="btn btn-sm btn-info" target="_blank">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-success">
+                                    <div class="card-body">
+                                        <h6><i data-feather="activity" class="text-success me-2"></i>Mood Boosting Activities</h6>
+                                        <p class="small text-muted">Practical activities to help lift your spirits</p>
+                                        <a href="https://www.helpguide.org/articles/depression/depression-self-help.htm" class="btn btn-sm btn-success" target="_blank">Get Ideas</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% elif top_emotion == 'anxiety' or top_emotion == 'fear' %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="card border-warning">
+                                    <div class="card-body">
+                                        <h6><i data-feather="shield" class="text-warning me-2"></i>Anxiety Management</h6>
+                                        <p class="small text-muted">Techniques and resources for managing anxiety</p>
+                                        <a href="https://www.anxietyanddepressionassociation.org/" class="btn btn-sm btn-warning" target="_blank">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-body">
+                                        <h6><i data-feather="wind" class="text-primary me-2"></i>Breathing Exercises</h6>
+                                        <p class="small text-muted">Guided breathing techniques for immediate relief</p>
+                                        <a href="https://www.headspace.com/meditation/breathing-exercises" class="btn btn-sm btn-primary" target="_blank">Try Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% elif top_emotion == 'anger' %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="card border-danger">
+                                    <div class="card-body">
+                                        <h6><i data-feather="zap" class="text-danger me-2"></i>Anger Management</h6>
+                                        <p class="small text-muted">Strategies for managing and expressing anger healthily</p>
+                                        <a href="https://www.apa.org/topics/anger/control" class="btn btn-sm btn-danger" target="_blank">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-secondary">
+                                    <div class="card-body">
+                                        <h6><i data-feather="pause" class="text-secondary me-2"></i>Mindfulness Techniques</h6>
+                                        <p class="small text-muted">Mindfulness practices to help process difficult emotions</p>
+                                        <a href="https://www.mindful.org/how-to-manage-anger-with-mindfulness/" class="btn btn-sm btn-secondary" target="_blank">Practice</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="card border-success">
+                                    <div class="card-body">
+                                        <h6><i data-feather="trending-up" class="text-success me-2"></i>Maintain Positive Momentum</h6>
+                                        <p class="small text-muted">Keep building on your positive emotional state</p>
+                                        <a href="https://www.positivityblog.com/" class="btn btn-sm btn-success" target="_blank">Explore</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-info">
+                                    <div class="card-body">
+                                        <h6><i data-feather="book" class="text-info me-2"></i>Emotional Intelligence</h6>
+                                        <p class="small text-muted">Develop better emotional awareness and regulation</p>
+                                        <a href="https://www.helpguide.org/articles/mental-health/emotional-intelligence-toolkit.htm" class="btn btn-sm btn-info" target="_blank">Learn</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Resource Categories -->
+    <div class="row g-4">
+        <!-- Professional Support -->
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i data-feather="users" class="me-2"></i>Professional Support
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">BetterHelp</h6>
+                                    <p class="mb-1 text-muted small">Online therapy platform with licensed therapists</p>
+                                </div>
+                                <a href="https://www.betterhelp.com/" class="btn btn-sm btn-outline-primary" target="_blank">Visit</a>
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Talkspace</h6>
+                                    <p class="mb-1 text-muted small">Text-based therapy with professional counselors</p>
+                                </div>
+                                <a href="https://www.talkspace.com/" class="btn btn-sm btn-outline-primary" target="_blank">Visit</a>
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Psychology Today</h6>
+                                    <p class="mb-1 text-muted small">Find local therapists and mental health professionals</p>
+                                </div>
+                                <a href="https://www.psychologytoday.com/us/therapists" class="btn btn-sm btn-outline-primary" target="_blank">Search</a>
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">7 Cups</h6>
+                                    <p class="mb-1 text-muted small">Free emotional support from trained listeners</p>
+                                </div>
+                                <a href="https://www.7cups.com/" class="btn btn-sm btn-outline-primary" target="_blank">Chat</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mental Health Apps -->
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i data-feather="smartphone" class="me-2"></i>Mental Health Apps
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Headspace</h6>
+                                    <p class="mb-1 text-muted small">Meditation and mindfulness exercises</p>
+                                </div>
+                                <a href="https://www.headspace.com/" class="btn btn-sm btn-outline-success" target="_blank">Download</a>
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Calm</h6>
+                                    <p class="mb-1 text-muted small">Sleep stories, meditation, and relaxation</p>
+                                </div>
+                                <a href="https://www.calm.com/" class="btn btn-sm btn-outline-success" target="_blank">Download</a>
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Sanvello</h6>
+                                    <p class="mb-1 text-muted small">Anxiety and mood tracking with coping tools</p>
+                                </div>
+                                <a href="https://www.sanvello.com/" class="btn btn-sm btn-outline-success" target="_blank">Download</a>
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">MindShift</h6>
+                                    <p class="mb-1 text-muted small">CBT-based tools for anxiety management</p>
+                                </div>
+                                <a href="https://www.anxietybc.com/resources/mindshift-app" class="btn btn-sm btn-outline-success" target="_blank">Download</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Educational Resources -->
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i data-feather="book-open" class="me-2"></i>Educational Resources
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">NAMI</h6>
+                                    <p class="mb-1 text-muted small">National Alliance on Mental Illness resources</p>
+                                </div>
+                                <a href="https://www.nami.org/" class="btn btn-sm btn-outline-info" target="_blank">Learn</a>
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Mental Health America</h6>
+                                    <p class="mb-1 text-muted small">Mental health information and advocacy</p>
+                                </div>
+                                <a href="https://www.mhanational.org/" class="btn btn-sm btn-outline-info" target="_blank">Explore</a>
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">NIMH</h6>
+                                    <p class="mb-1 text-muted small">National Institute of Mental Health</p>
+                                </div>
+                                <a href="https://www.nimh.nih.gov/" class="btn btn-sm btn-outline-info" target="_blank">Research</a>
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">HelpGuide</h6>
+                                    <p class="mb-1 text-muted small">Mental health and wellness guidance</p>
+                                </div>
+                                <a href="https://www.helpguide.org/" class="btn btn-sm btn-outline-info" target="_blank">Read</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Journaling Tools -->
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i data-feather="edit-3" class="me-2"></i>Journaling Tools
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Journey</h6>
+                                    <p class="mb-1 text-muted small">Digital journal with mood tracking</p>
+                                </div>
+                                <a href="https://journey.cloud/" class="btn btn-sm btn-outline-warning" target="_blank">Try</a>
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Penzu</h6>
+                                    <p class="mb-1 text-muted small">Private online journal platform</p>
+                                </div>
+                                <a href="https://penzu.com/" class="btn btn-sm btn-outline-warning" target="_blank">Write</a>
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Day One</h6>
+                                    <p class="mb-1 text-muted small">Award-winning journaling app</p>
+                                </div>
+                                <a href="https://dayoneapp.com/" class="btn btn-sm btn-outline-warning" target="_blank">Download</a>
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item px-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Our Built-in Journal</h6>
+                                    <p class="mb-1 text-muted small">Use our integrated journaling feature</p>
+                                </div>
+                                <a href="{{ url_for('journal') }}" class="btn btn-sm btn-outline-warning">Start Writing</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Support Groups -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i data-feather="users" class="me-2"></i>Support Groups & Communities
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <i data-feather="globe" class="text-primary mb-2" style="width: 32px; height: 32px;"></i>
+                                <h6>Online Support Groups</h6>
+                                <p class="text-muted small">Connect with others who understand your experiences</p>
+                                <a href="https://www.supportgroups.com/" class="btn btn-sm btn-outline-primary" target="_blank">Find Groups</a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <i data-feather="map-pin" class="text-success mb-2" style="width: 32px; height: 32px;"></i>
+                                <h6>Local Support Groups</h6>
+                                <p class="text-muted small">Find in-person support groups in your area</p>
+                                <a href="https://www.nami.org/Support-Education/Support-Groups" class="btn btn-sm btn-outline-success" target="_blank">Search Local</a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <i data-feather="message-square" class="text-info mb-2" style="width: 32px; height: 32px;"></i>
+                                <h6>Online Communities</h6>
+                                <p class="text-muted small">Join moderated mental health communities</p>
+                                <a href="https://www.reddit.com/r/mentalhealth/" class="btn btn-sm btn-outline-info" target="_blank">Join Discussion</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Disclaimer -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="alert alert-info">
+                <div class="d-flex">
+                    <i data-feather="info" class="me-3 mt-1"></i>
+                    <div>
+                        <h6 class="alert-heading">Important Disclaimer</h6>
+                        <p class="mb-0">
+                            These resources are provided for informational purposes only and do not constitute medical advice. 
+                            Always consult with a qualified healthcare professional for diagnosis and treatment of mental health conditions. 
+                            If you're experiencing a mental health emergency, please contact emergency services immediately.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}Journal - Mental Wellness Chatbot{% endblock %}
+
+{% block main_class %}py-4{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1>Digital Journal</h1>
+                    <p class="text-muted mb-0">Express your thoughts and track your emotional journey</p>
+                </div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newEntryModal">
+                    <i data-feather="plus" class="me-2"></i>New Entry
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Journal Entries -->
+    <div class="row">
+        <div class="col-12">
+            {% if entries %}
+                <div class="row g-4">
+                    {% for entry in entries %}
+                        <div class="col-lg-6">
+                            <div class="card h-100">
+                                <div class="card-header d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1">{{ entry.title }}</h6>
+                                        <small class="text-muted">{{ entry.created_at.strftime('%B %d, %Y at %I:%M %p') }}</small>
+                                    </div>
+                                    {% if entry.emotion %}
+                                        <span class="badge bg-{{ 'success' if entry.emotion == 'joy' else 'info' if entry.emotion == 'surprise' else 'warning' if entry.emotion == 'fear' else 'danger' if entry.emotion == 'anger' else 'secondary' }}">
+                                            {{ entry.emotion.title() }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">{{ entry.content[:200] }}{% if entry.content|length > 200 %}...{% endif %}</p>
+                                    
+                                    {% if entry.emotion_confidence %}
+                                        <div class="d-flex align-items-center mb-2">
+                                            <small class="text-muted me-2">Emotion Confidence:</small>
+                                            <div class="progress flex-grow-1" style="height: 4px;">
+                                                <div class="progress-bar" role="progressbar" 
+                                                     style="width: {{ (entry.emotion_confidence * 100)|int }}%"
+                                                     aria-valuenow="{{ (entry.emotion_confidence * 100)|int }}" 
+                                                     aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <small class="text-muted ms-2">{{ "%.0f"|format(entry.emotion_confidence * 100) }}%</small>
+                                        </div>
+                                    {% endif %}
+                                    
+                                    {% if entry.sentiment_score is not none %}
+                                        <div class="d-flex align-items-center">
+                                            <small class="text-muted me-2">Sentiment:</small>
+                                            <span class="badge bg-{{ 'success' if entry.sentiment_score > 0.1 else 'danger' if entry.sentiment_score < -0.1 else 'secondary' }}">
+                                                {{ 'Positive' if entry.sentiment_score > 0.1 else 'Negative' if entry.sentiment_score < -0.1 else 'Neutral' }}
+                                                ({{ "%.2f"|format(entry.sentiment_score) }})
+                                            </span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="viewFullEntry({{ entry.id }}, '{{ entry.title }}', '{{ entry.content|replace("'", "\\'") }}')">
+                                        <i data-feather="eye" class="me-1"></i>View Full
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i data-feather="book" style="width: 64px; height: 64px;" class="text-muted mb-3"></i>
+                    <h4 class="text-muted">Start Your Journaling Journey</h4>
+                    <p class="text-muted mb-4">
+                        Journaling is a powerful tool for self-reflection and emotional processing. 
+                        Write about your day, your feelings, or anything on your mind.
+                    </p>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newEntryModal">
+                        <i data-feather="edit-3" class="me-2"></i>Write Your First Entry
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- New Entry Modal -->
+<div class="modal fade" id="newEntryModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i data-feather="edit-3" class="me-2"></i>New Journal Entry
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title (optional)</label>
+                        <input type="text" class="form-control" id="title" name="title" 
+                               placeholder="Give your entry a title...">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Your thoughts <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="content" name="content" rows="8" required
+                                  placeholder="What's on your mind today? How are you feeling? Write about anything that comes to mind..."></textarea>
+                        <div class="form-text">
+                            <i data-feather="heart" class="me-1" style="width: 12px; height: 12px;"></i>
+                            Your journal entries are analyzed for emotion detection to help track your emotional wellness.
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info border-start border-5 border-info">
+                        <div class="d-flex">
+                            <i data-feather="lightbulb" class="me-2 mt-1" style="width: 16px; height: 16px;"></i>
+                            <div>
+                                <h6 class="alert-heading">Journaling Tips</h6>
+                                <ul class="mb-0 small">
+                                    <li>Write freely without worrying about grammar or structure</li>
+                                    <li>Focus on your emotions and how events made you feel</li>
+                                    <li>Be honest and authentic with yourself</li>
+                                    <li>Try to write regularly, even if just for a few minutes</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i data-feather="save" class="me-2"></i>Save Entry
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- View Entry Modal -->
+<div class="modal fade" id="viewEntryModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewEntryTitle">
+                    <i data-feather="book-open" class="me-2"></i>Journal Entry
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="viewEntryContent" class="whitespace-pre-wrap"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function viewFullEntry(id, title, content) {
+    document.getElementById('viewEntryTitle').innerHTML = '<i data-feather="book-open" class="me-2"></i>' + title;
+    document.getElementById('viewEntryContent').textContent = content;
+    
+    // Re-initialize feather icons
+    feather.replace();
+    
+    // Show modal
+    const modal = new bootstrap.Modal(document.getElementById('viewEntryModal'));
+    modal.show();
+}
+
+// Auto-resize textarea
+document.addEventListener('DOMContentLoaded', function() {
+    const textarea = document.getElementById('content');
+    if (textarea) {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Chat - Mental Wellness Chatbot{% endblock %}
+
+{% block main_class %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-lg-8 offset-lg-2 d-flex flex-column">
+            <div class="card flex-grow-1 d-flex flex-column">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex align-items-center">
+                        <i data-feather="message-circle" class="me-2"></i>
+                        <h5 class="mb-0">Mental Wellness Chat</h5>
+                        <div class="ms-auto">
+                            <small class="text-white-50">AI Companion</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body flex-grow-1 d-flex flex-column p-0">
+                    <div id="chat-messages" class="flex-grow-1 p-3" style="overflow-y: auto; max-height: 60vh;">
+
+                        
+                        {% if not conversations %}
+                            <div class="text-center text-muted py-5">
+                                <i data-feather="heart" style="width: 64px; height: 64px;" class="mb-3"></i>
+                                <h4>Welcome to your safe space</h4>
+                                <p>I'm here to listen and support you. Share what's on your mind, and I'll help you process your feelings.</p>
+                            </div>
+                        {% endif %}
+                        
+                        {% for conversation in conversations %}
+                            <div class="message-wrapper mb-3">
+                                {% if conversation.is_user_message %}
+                                    <div class="d-flex justify-content-end">
+                                        <div class="message user-message bg-primary text-white p-3 rounded">
+                                            <p class="mb-1">{{ conversation.message }}</p>
+                                            <small class="text-white-50 d-block">
+                                                {{ conversation.timestamp.strftime('%I:%M %p') }}
+                                                {% if conversation.emotion %}
+                                                    • {{ conversation.emotion.title() }}
+                                                    {% if conversation.emotion_confidence %}
+                                                        ({{ "%.0f"|format(conversation.emotion_confidence * 100) }}%)
+                                                    {% endif %}
+                                                {% endif %}
+                                            </small>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="d-flex">
+                                        <div class="message bot-message bg-light text-dark p-3 rounded">
+                                            <div class="d-flex align-items-start">
+                                                <i data-feather="heart" class="text-primary me-2 mt-1" style="width: 16px; height: 16px;"></i>
+                                                <div>
+                                                    <p class="mb-1">{{ conversation.message }}</p>
+                                                    <small class="text-muted">{{ conversation.timestamp.strftime('%I:%M %p') }}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="border-top p-3">
+                        <form method="POST" action="{{ url_for('send_message') }}" class="d-flex gap-2">
+                            <input type="text" name="message" class="form-control" 
+                                   placeholder="Share what's on your mind..." required 
+                                   id="message-input" autocomplete="off">
+                            <button type="submit" class="btn btn-primary">
+                                <i data-feather="send"></i>
+                            </button>
+                        </form>
+                        <small class="text-muted mt-2 d-block">
+                            <i data-feather="shield" class="me-1" style="width: 12px; height: 12px;"></i>
+                            Your conversations are private and secure
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Emotion Detection Info Modal -->
+<div class="modal fade" id="emotionInfoModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Emotion Detection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Our AI analyzes your messages to detect emotions and provide more empathetic responses. This helps us:</p>
+                <ul>
+                    <li>Understand your emotional state better</li>
+                    <li>Provide more relevant support and resources</li>
+                    <li>Track your emotional well-being over time</li>
+                    <li>Offer personalized coping strategies</li>
+                </ul>
+                <p><strong>Your privacy is our priority.</strong> All emotion data is stored securely and used only to improve your experience.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Got it</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}
