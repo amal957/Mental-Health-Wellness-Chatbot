@@ -1,0 +1,26 @@
+# This is a placeholder file since we cannot generate the actual ML model pickle file.
+# The application's ml_utils.py is already designed to handle missing model files gracefully
+# by falling back to rule-based emotion detection.
+
+# To use a real trained model, you would need to:
+# 1. Train a TF-IDF vectorizer + Logistic Regression model on emotion-labeled text data
+# 2. Save it using joblib.dump() with the following structure:
+#
+# import joblib
+# from sklearn.feature_extraction.text import TfidfVectorizer
+# from sklearn.linear_model import LogisticRegression
+# from sklearn.preprocessing import LabelEncoder
+# 
+# # After training your model:
+# model_data = {
+#     'vectorizer': tfidf_vectorizer,
+#     'model': logistic_regression_model,
+#     'label_encoder': label_encoder
+# }
+# joblib.dump(model_data, 'tfidf_logreg_emotion_1750350595249.pkl')
+
+# For now, the application will use the fallback emotion detection system
+# which provides basic keyword-based emotion classification.
+
+print("This is a placeholder for the ML model pickle file.")
+print("The application will use fallback emotion detection.")
