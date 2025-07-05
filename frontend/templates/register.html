@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Mental Wellness Chatbot{% endblock %}
+
+{% block main_class %}py-5{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <i data-feather="user-plus" class="text-primary mb-3" style="width: 48px; height: 48px;"></i>
+                        <h2 class="card-title">Create Account</h2>
+                        <p class="text-muted">Join our supportive mental wellness community</p>
+                    </div>
+                    
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="full_name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="full_name" name="full_name" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required minlength="6">
+                            <div class="form-text">Password must be at least 6 characters long.</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 mb-3">
+                            <i data-feather="user-check" class="me-2"></i>Create Account
+                        </button>
+                    </form>
+                    
+                    <div class="text-center">
+                        <p class="text-muted">Already have an account? 
+                            <a href="{{ url_for('main.login') }}" class="text-decoration-none">Sign in here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <small class="text-muted">
+                    <i data-feather="lock" class="me-1"></i>
+                    Your data is encrypted and secure. We never share your personal information.
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

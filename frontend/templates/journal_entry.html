@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}New Journal Entry - Mental Wellness Chatbot{% endblock %}
+
+{% block main_class %}py-4{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">
+                        <i data-feather="edit-3" class="me-2"></i>New Journal Entry
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" 
+                                   placeholder="Give your entry a meaningful title..." required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="content" class="form-label">Content</label>
+                            <textarea class="form-control" id="content" name="content" rows="12" 
+                                      placeholder="Share your thoughts, feelings, experiences, or anything on your mind..." required></textarea>
+                            <div class="form-text">
+                                <i data-feather="heart" class="me-1" style="width: 12px; height: 12px;"></i>
+                                This is your safe space. Write freely and authentically.
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('main.journal') }}" class="btn btn-secondary">
+                                <i data-feather="arrow-left" class="me-2"></i>Back to Journal
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i data-feather="save" class="me-2"></i>Save Entry
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="mt-4 p-3 bg-info bg-opacity-10 rounded">
+                <h6 class="text-info">
+                    <i data-feather="info" class="me-2"></i>How Journal Analysis Works
+                </h6>
+                <p class="mb-0 small text-muted">
+                    Our AI will analyze your journal entry to detect emotions and sentiment patterns. 
+                    This helps you track your emotional well-being over time and gain insights into your mental health journey.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Auto-save functionality
+    const contentTextarea = document.getElementById('content');
+    const titleInput = document.getElementById('title');
+    
+    // Auto-resize textarea
+    function autoResize() {
+        contentTextarea.style.height = 'auto';
+        contentTextarea.style.height = contentTextarea.scrollHeight + 'px';
+    }
+    
+    contentTextarea.addEventListener('input', autoResize);
+    
+    // Initial resize
+    autoResize();
+</script>
+{% endblock %}

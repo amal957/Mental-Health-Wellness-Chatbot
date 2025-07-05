@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics - Mental Wellness Chatbot{% endblock %}
+
+{% block main_class %}py-4{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1>Emotion Analytics</h1>
+                    <p class="text-muted mb-0">Insights into your emotional patterns and trends</p>
+                </div>
+                <div>
+                    <select id="timeRange" class="form-select" style="width: auto;">
+                        <option value="7">Last 7 days</option>
+                        <option value="30" selected>Last 30 days</option>
+                        <option value="90">Last 90 days</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Summary Cards -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card bg-gradient-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title text-white-50">Total Entries</h6>
+                            <h3 class="mb-0" id="total-entries">-</h3>
+                        </div>
+                        <i data-feather="activity" style="width: 32px; height: 32px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-gradient-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title text-white-50">Dominant Emotion</h6>
+                            <h3 class="mb-0" id="dominant-emotion">-</h3>
+                        </div>
+                        <i data-feather="heart" style="width: 32px; height: 32px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-gradient-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title text-white-50">Avg Sentiment</h6>
+                            <h3 class="mb-0" id="avg-sentiment">-</h3>
+                        </div>
+                        <i data-feather="trending-up" style="width: 32px; height: 32px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-gradient-warning text-dark">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Days Tracked</h6>
+                            <h3 class="mb-0" id="days-tracked">-</h3>
+                        </div>
+                        <i data-feather="calendar" style="width: 32px; height: 32px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Charts Row 1 -->
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i data-feather="pie-chart" class="me-2"></i>Emotion Distribution
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="emotionPieChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i data-feather="bar-chart" class="me-2"></i>Emotion Frequency
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="emotionBarChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Charts Row 2 -->
+    <div class="row g-4 mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i data-feather="trending-up" class="me-2"></i>Emotion Trends Over Time
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="emotionTrendChart" style="height: 400px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Charts Row 3 -->
+    <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i data-feather="target" class="me-2"></i>Emotional Balance
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="emotionalBalanceChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i data-feather="activity" class="me-2"></i>Sentiment Trends
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="sentimentTrendChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Heatmap -->
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i data-feather="calendar" class="me-2"></i>Daily Mood Heatmap
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="moodHeatmap" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Export Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i data-feather="download" class="me-2"></i>Export Analytics
+                    </h5>
+                    <p class="text-muted">Download your emotional analytics data for healthcare providers or personal records.</p>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-primary" onclick="exportCharts()">
+                            <i data-feather="image" class="me-2"></i>Export Charts
+                        </button>
+                        <button class="btn btn-outline-success" onclick="exportData()">
+                            <i data-feather="file-text" class="me-2"></i>Export Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex justify-content-center align-items-center" style="z-index: 9999;">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
+{% endblock %}

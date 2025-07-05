@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+
+{% block title %}Resources - Mental Wellness Chatbot{% endblock %}
+
+{% block main_class %}py-4{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-4">
+                <h1>Mental Health Resources</h1>
+                <p class="text-muted mb-0">Professional support, crisis help, and wellness tools</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Emergency Resources -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="alert alert-danger border-start border-danger border-4">
+                <h5 class="alert-heading">
+                    <i data-feather="alert-triangle" class="me-2"></i>Crisis Support
+                </h5>
+                <p class="mb-3">If you're experiencing thoughts of self-harm or suicide, please reach out for immediate help:</p>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <strong>National Suicide Prevention Lifeline</strong><br>
+                        <a href="tel:988" class="text-decoration-none">988 or 1-800-273-8255</a><br>
+                        <small class="text-muted">Available 24/7</small>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Crisis Text Line</strong><br>
+                        Text HOME to <a href="sms:741741" class="text-decoration-none">741741</a><br>
+                        <small class="text-muted">Available 24/7</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Professional Help -->
+    <div class="row g-4 mb-4">
+        <div class="col-12">
+            <h2 class="mb-3">Professional Support</h2>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card resource-card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i data-feather="user-check" class="text-primary me-3" style="width: 32px; height: 32px;"></i>
+                        <h5 class="mb-0">Find a Therapist</h5>
+                    </div>
+                    <p class="text-muted mb-3">Connect with licensed mental health professionals in your area.</p>
+                    <ul class="list-unstyled">
+                        <li><a href="https://www.psychologytoday.com" target="_blank" class="text-decoration-none">Psychology Today</a></li>
+                        <li><a href="https://www.betterhelp.com" target="_blank" class="text-decoration-none">BetterHelp (Online)</a></li>
+                        <li><a href="https://www.talkspace.com" target="_blank" class="text-decoration-none">Talkspace (Online)</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card resource-card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i data-feather="heart" class="text-success me-3" style="width: 32px; height: 32px;"></i>
+                        <h5 class="mb-0">Support Groups</h5>
+                    </div>
+                    <p class="text-muted mb-3">Join communities of people who understand your experiences.</p>
+                    <ul class="list-unstyled">
+                        <li><a href="https://www.nami.org/Support-Education/Support-Groups" target="_blank" class="text-decoration-none">NAMI Support Groups</a></li>
+                        <li><a href="https://www.mhanational.org/finding-help" target="_blank" class="text-decoration-none">Mental Health America</a></li>
+                        <li><a href="https://www.dbsalliance.org/support/chapters-support-groups/" target="_blank" class="text-decoration-none">Depression & Bipolar Support</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Self-Care Tools -->
+    <div class="row g-4 mb-4">
+        <div class="col-12">
+            <h2 class="mb-3">Self-Care & Wellness Tools</h2>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card resource-card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i data-feather="wind" class="text-info me-3" style="width: 32px; height: 32px;"></i>
+                        <h5 class="mb-0">Breathing Exercises</h5>
+                    </div>
+                    <p class="text-muted mb-3">Quick relaxation techniques for stress and anxiety.</p>
+                    <button class="btn btn-outline-info btn-sm" onclick="startBreathingExercise()">
+                        <i data-feather="play" class="me-1"></i>4-7-8 Breathing
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card resource-card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i data-feather="sun" class="text-warning me-3" style="width: 32px; height: 32px;"></i>
+                        <h5 class="mb-0">Mindfulness Apps</h5>
+                    </div>
+                    <p class="text-muted mb-3">Guided meditation and mindfulness practices.</p>
+                    <ul class="list-unstyled small">
+                        <li>• Headspace</li>
+                        <li>• Calm</li>
+                        <li>• Insight Timer</li>
+                        <li>• Ten Percent Happier</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card resource-card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i data-feather="book-open" class="text-secondary me-3" style="width: 32px; height: 32px;"></i>
+                        <h5 class="mb-0">Educational Resources</h5>
+                    </div>
+                    <p class="text-muted mb-3">Learn about mental health conditions and coping strategies.</p>
+                    <ul class="list-unstyled small">
+                        <li>• <a href="https://www.nimh.nih.gov" target="_blank" class="text-decoration-none">NIMH</a></li>
+                        <li>• <a href="https://www.mentalhealth.gov" target="_blank" class="text-decoration-none">MentalHealth.gov</a></li>
+                        <li>• <a href="https://www.samhsa.gov" target="_blank" class="text-decoration-none">SAMHSA</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mood Tracking -->
+    <div class="row g-4">
+        <div class="col-12">
+            <h2 class="mb-3">Track Your Progress</h2>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card resource-card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i data-feather="trending-up" class="text-primary me-3" style="width: 32px; height: 32px;"></i>
+                        <h5 class="mb-0">Daily Mood Check</h5>
+                    </div>
+                    <p class="text-muted mb-3">Quick daily assessment of your emotional state.</p>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button class="btn btn-outline-success btn-sm mood-btn" data-mood="great">😊 Great</button>
+                        <button class="btn btn-outline-primary btn-sm mood-btn" data-mood="good">🙂 Good</button>
+                        <button class="btn btn-outline-warning btn-sm mood-btn" data-mood="okay">😐 Okay</button>
+                        <button class="btn btn-outline-danger btn-sm mood-btn" data-mood="difficult">😞 Difficult</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card resource-card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i data-feather="target" class="text-success me-3" style="width: 32px; height: 32px;"></i>
+                        <h5 class="mb-0">Wellness Goals</h5>
+                    </div>
+                    <p class="text-muted mb-3">Set and track your mental wellness objectives.</p>
+                    <div class="small">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="goal1">
+                            <label class="form-check-label" for="goal1">Practice mindfulness daily</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="goal2">
+                            <label class="form-check-label" for="goal2">Exercise 3x per week</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="goal3">
+                            <label class="form-check-label" for="goal3">Journal regularly</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Important Notice -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="alert alert-info border-start border-info border-4">
+                <h6 class="alert-heading">
+                    <i data-feather="info" class="me-2"></i>Important Notice
+                </h6>
+                <p class="mb-0">
+                    This chatbot is designed to provide support and information but is not a substitute for professional medical advice, 
+                    diagnosis, or treatment. Always seek the advice of qualified health providers with any questions you may have 
+                    regarding a medical condition.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Breathing Exercise Modal -->
+<div class="modal fade" id="breathingModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">4-7-8 Breathing Exercise</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div id="breathingGuide">
+                    <div class="breathing-circle mb-4" id="breathingCircle"></div>
+                    <h4 id="breathingInstruction">Click Start to begin</h4>
+                    <p class="text-muted" id="breathingCount"></p>
+                </div>
+                <button class="btn btn-primary" id="startBreathing">Start Exercise</button>
+                <button class="btn btn-secondary d-none" id="stopBreathing">Stop</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Breathing exercise functionality
+    let breathingInterval;
+    let breathingStep = 0;
+    let cycleCount = 0;
+    
+    function startBreathingExercise() {
+        const modal = new bootstrap.Modal(document.getElementById('breathingModal'));
+        modal.show();
+    }
+    
+    document.getElementById('startBreathing').addEventListener('click', function() {
+        const circle = document.getElementById('breathingCircle');
+        const instruction = document.getElementById('breathingInstruction');
+        const count = document.getElementById('breathingCount');
+        const startBtn = document.getElementById('startBreathing');
+        const stopBtn = document.getElementById('stopBreathing');
+        
+        startBtn.classList.add('d-none');
+        stopBtn.classList.remove('d-none');
+        
+        cycleCount = 0;
+        breathingStep = 0;
+        
+        function runBreathingCycle() {
+            const steps = [
+                { text: 'Breathe in slowly...', duration: 4000, action: 'inhale' },
+                { text: 'Hold your breath...', duration: 7000, action: 'hold' },
+                { text: 'Exhale slowly...', duration: 8000, action: 'exhale' },
+                { text: 'Rest...', duration: 1000, action: 'rest' }
+            ];
+            
+            const step = steps[breathingStep];
+            instruction.textContent = step.text;
+            count.textContent = `Cycle ${cycleCount + 1} of 4`;
+            
+            // Animate circle
+            circle.className = `breathing-circle breathing-${step.action}`;
+            
+            breathingInterval = setTimeout(() => {
+                breathingStep++;
+                if (breathingStep >= steps.length) {
+                    breathingStep = 0;
+                    cycleCount++;
+                    if (cycleCount >= 4) {
+                        instruction.textContent = 'Exercise complete! Well done.';
+                        count.textContent = 'Take a moment to notice how you feel.';
+                        startBtn.classList.remove('d-none');
+                        stopBtn.classList.add('d-none');
+                        circle.className = 'breathing-circle';
+                        return;
+                    }
+                }
+                runBreathingCycle();
+            }, step.duration);
+        }
+        
+        runBreathingCycle();
+    });
+    
+    document.getElementById('stopBreathing').addEventListener('click', function() {
+        clearTimeout(breathingInterval);
+        document.getElementById('breathingInstruction').textContent = 'Exercise stopped';
+        document.getElementById('breathingCount').textContent = '';
+        document.getElementById('startBreathing').classList.remove('d-none');
+        document.getElementById('stopBreathing').classList.add('d-none');
+        document.getElementById('breathingCircle').className = 'breathing-circle';
+    });
+    
+    // Mood tracking
+    document.querySelectorAll('.mood-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const mood = this.dataset.mood;
+            this.textContent = this.textContent + ' ✓';
+            this.disabled = true;
+            
+            // Here you could send the mood data to your backend
+            console.log('Mood logged:', mood);
+            
+            setTimeout(() => {
+                this.textContent = this.textContent.replace(' ✓', '');
+                this.disabled = false;
+            }, 2000);
+        });
+    });
+</script>
+
+<style>
+    .breathing-circle {
+        width: 100px;
+        height: 100px;
+        border: 3px solid var(--bs-primary);
+        border-radius: 50%;
+        margin: 0 auto;
+        transition: transform 0.3s ease;
+    }
+    
+    .breathing-inhale {
+        transform: scale(1.5);
+        transition: transform 4s ease;
+    }
+    
+    .breathing-hold {
+        transform: scale(1.5);
+    }
+    
+    .breathing-exhale {
+        transform: scale(1);
+        transition: transform 8s ease;
+    }
+    
+    .breathing-rest {
+        transform: scale(1);
+    }
+</style>
+{% endblock %}
